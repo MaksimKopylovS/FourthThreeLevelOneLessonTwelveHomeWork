@@ -1,5 +1,6 @@
 package max_sk.HomeWork.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +11,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
+
 public class Order {
 
     @Id
@@ -24,25 +26,22 @@ public class Order {
     @Column(name = "order_number")
     private Long orderNumber;
 
-    @Column(name = "title")
-    private String title;
-
     @Column(name = "count")
     private int count;
 
-    @Column(name = "cost")
-    private int cost;
+    @Column(name = "sum_cost")
+    private int sumCost;
 
     @Column(name = "create_at")
     @CreationTimestamp
     private Date updateAt;
 
-    public Order(Long idProduct, Long orderNumber, String title, int count, int cost, Date updateAt) {
+    public Order(Long id , Long idProduct, Long orderNumber,  int count,  int sumCost, Date date) {
+        this.id = id;
         this.idProduct = idProduct;
         this.orderNumber = orderNumber;
-        this.title = title;
         this.count = count;
-        this.cost = cost;
-        this.updateAt = updateAt;
+        this.sumCost = sumCost;
+        this.updateAt = date;
     }
 }

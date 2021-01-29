@@ -7,16 +7,18 @@ import max_sk.HomeWork.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class BasketProductsService {
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
     private List<ProductDTO> basketList;
+    private static Long orderNumber;
 
     @Autowired
     public BasketProductsService(ProductRepository productRepository, OrderRepository orderRepository) {
@@ -27,6 +29,7 @@ public class BasketProductsService {
     @PostConstruct
     public void init(){
         basketList = new ArrayList<>();
+        orderNumber = 1L;
     }
 
     public void addProdut(ProductDTO productDTO){
@@ -86,15 +89,15 @@ public class BasketProductsService {
 
     public void createOrder(){
         for (ProductDTO productDTO : basketList){
-
-            orderRepository.save(new Order(
+            orderRepository.saveAndFlush(new Order(
                     productDTO.getId(),
-                    1L,
-                    productDTO.getTitle(),
+                    productDTO.getId(),
+                    orderNumber,
                     productDTO.getCount(),
-                    productDTO.getCost(),
+                    productDTO.getSumCost(),
                     new Date()
                     ));
         }
+        orderNumber++;
     }
 }

@@ -11,9 +11,8 @@ create table orders(
     id              bigserial primary key,
     id_product      bigint,
     order_number    bigint,
-    title           varchar(255),
     count           int,
-    cost            int,
+    sum_cost        int,
     create_at timestamp default current_timestamp
 );
 insert into product (title, cost)

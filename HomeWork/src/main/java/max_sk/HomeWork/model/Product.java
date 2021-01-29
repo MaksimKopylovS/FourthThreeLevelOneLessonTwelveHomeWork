@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -33,6 +34,11 @@ public class Product {
     @Column(name = "update_at")
     @CreationTimestamp
     private Date updateAt;
+
+    @OneToMany
+    @JoinTable(name = "orders",
+            joinColumns = @JoinColumn(name = "id_product"))
+    private Collection<Order> orderCollection;
 
 
     public Product(ProductDTO productDTO) {
